@@ -43,9 +43,37 @@ public class ShippingTest
 
         eventProcessor.Process(berthInFelixstowe);
 
-        _everGiven.Location.ShoudBe(ShipLocation.InPort);
-        _everGiven.Log.ShouldContain(berthInFelixstowe);
+        _everGiven.Location.ShouldBe(ShipLocation.InPort);
+        _everGiven.ShipsLog.ShouldContain(berthInFelixstowe);
         _felixstowe.Berths.ShouldContain(_everGiven);
+    }
+}
+
+public class EventProcessor
+{
+    public void Process(ArrivalEvent arrivalEvent)
+    {
+        arrivalEvent.Process();
+    }
+}
+
+public class ArrivalEvent
+{
+    private readonly DateTime _occurrence;
+    private readonly Port _port;
+    private readonly Ship _ship;
+
+    public ArrivalEvent(DateTime occurrence, Port port, Ship ship)
+    {
+        _occurrence = occurrence;
+        _port = port;
+        _ship = ship;
+    }
+
+    public void Process()
+    {
+        _port.Berth(_ship);
+        _ship.Log(this);
     }
 }
 
@@ -83,11 +111,13 @@ public class Ship
     public string Name { get; }
     public ShipLocation Location { get; private set; }
     public List<Port> Ports { get; }
+    public List<ArrivalEvent> ShipsLog { get; }
 
     private Ship(string name)
     {
         Name = name;
         Ports = new List<Port>();
+        ShipsLog = new List<ArrivalEvent>();
 
     }
 
@@ -100,5 +130,10 @@ public class Ship
     {
         Location = ShipLocation.InPort;
         Ports.Add(port);
+    }
+
+    public void Log(ArrivalEvent arrivalEvent)
+    {
+        ShipsLog.Add(arrivalEvent);
     }
 }
