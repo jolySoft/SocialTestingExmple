@@ -34,6 +34,11 @@ public class ShippingTest
     }
 }
 
+public enum ShipLocation
+{
+    InPort
+}
+
 public class Port
 {
     public string Name { get; }
@@ -43,6 +48,13 @@ public class Port
     private Port(string name)
     {
         Name = name;
+        Berths = new List<Ship>();
+    }
+
+    public void Berth(Ship ship)
+    {
+        Berths.Add(ship);
+        ship.Berth(this);
     }
 
     public static Port New(string name)
@@ -54,15 +66,24 @@ public class Port
 public class Ship
 {
     public string Name { get; }
+    public ShipLocation Location { get; private set; }
+    public List<Port> Ports { get; }
 
     private Ship(string name)
     {
         Name = name;
+        Ports = new List<Port>();
 
     }
 
     public static Ship New(string name)
     {
         return new Ship(name);
+    }
+
+    public void Berth(Port port)
+    {
+        Location = ShipLocation.InPort;
+        Ports.Add(port);
     }
 }
