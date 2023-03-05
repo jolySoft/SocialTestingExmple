@@ -34,6 +34,19 @@ public class ShippingTest
         _everGiven.Ports[0].ShouldBe(_felixstowe);
         _felixstowe.Berths.ShouldContain(_everGiven);
     }
+
+    [Fact]
+    public void ArrivalEventBerthsShip()
+    {
+        var berthInFelixstowe = new ArrivalEvent(new DateTime(2023, 03, 05, 10, 24, 10), _felixstowe, _everGiven);
+        var eventProcessor = new EventProcessor();
+
+        eventProcessor.Process(berthInFelixstowe);
+
+        _everGiven.Location.ShoudBe(ShipLocation.InPort);
+        _everGiven.Log.ShouldContain(berthInFelixstowe);
+        _felixstowe.Berths.ShouldContain(_everGiven);
+    }
 }
 
 public enum ShipLocation
