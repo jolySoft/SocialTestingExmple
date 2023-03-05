@@ -4,33 +4,35 @@ namespace EventSourceTests;
 
 public class ShippingTest
 {
+    private readonly Ship _everGiven;
+    private readonly Port _felixstowe;
+
+    public ShippingTest()
+    {
+        _everGiven = Ship.New("Ever Given");
+        _felixstowe = Port.New("felixstowe");
+    }
+
     [Fact]
     public void CanCreateNewShip()
     {
-        var ship = Ship.New("Ever Given");
-
-        ship.Name.ShouldBe("Ever Given");
+        _everGiven.Name.ShouldBe("Ever Given");
     }
 
     [Fact]
     public void CanCreatePort()
     {
-        var felixstowe = Port.New("felixstowe");
-
-        felixstowe.Name.ShouldBe("felixstowe");
+        _felixstowe.Name.ShouldBe("felixstowe");
     }
 
     [Fact]
     public void BerthShipInPort()
     {
-        var everGiven = Ship.New("Ever Given");
-        var felixstowe = Port.New("felixstowe");
+        _felixstowe.Berth(_everGiven);
 
-        felixstowe.Berth(everGiven);
-
-        everGiven.Location.ShouldBe(ShipLocation.InPort);
-        everGiven.Ports[0].ShouldBe(felixstowe);
-        felixstowe.Berths.ShouldContain(everGiven);
+        _everGiven.Location.ShouldBe(ShipLocation.InPort);
+        _everGiven.Ports[0].ShouldBe(_felixstowe);
+        _felixstowe.Berths.ShouldContain(_everGiven);
     }
 }
 
