@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using Shouldly;
 
 namespace EventSourceTests;
@@ -20,11 +19,26 @@ public class ShippingTest
 
         felixstowe.Name.ShouldBe("felixstowe");
     }
+
+    [Fact]
+    public void BerthShipInPort()
+    {
+        var everGiven = Ship.New("Ever Given");
+        var felixstowe = Port.New("felixstowe");
+
+        felixstowe.Berth(everGiven);
+
+        everGiven.Location.ShouldBe(ShipLocation.InPort);
+        everGiven.Ports[0].ShouldBe(felixstowe);
+        felixstowe.Berths.ShouldContain(everGiven);
+    }
 }
 
 public class Port
 {
     public string Name { get; }
+
+    public List<Ship> Berths { get; }
 
     private Port(string name)
     {
