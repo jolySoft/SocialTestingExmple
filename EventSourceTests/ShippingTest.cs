@@ -64,4 +64,21 @@ public class ShippingTest
         _everGiven.ShipsLog.ShouldContain(setToSea);
         _felixstowe.Berths.ShouldNotContain(_everGiven);
     }
+
+    [Fact]
+    public void JourneyTimeIsCalculatedFromDepartureEvent()
+    {
+        var eventProcessor = new EventProcessor();
+        var arrivesFelixstowe = new ArrivalEvent(new DateTime(01, 01, 2033, 03, 00, 00), _felixstowe, _everGiven);
+        eventProcessor.Process(arrivesFelixstowe);
+        var departsFelixstowe = new DepartureEvent(new DateTime(03, 01, 2023, 03, 00, 00), _felixstowe, _everGiven);
+        var newark = Port.New("Newark");
+        var arrivesNewark = new ArrivalEvent(new DateTime(13, 01, 2023, 03, 00, 00), newark, _everGiven);
+
+        TimeSpan journeyTime = _everGiven.ShipsLog.GetJourneyTime(_felixstowe, newark);
+
+        var expected = new TimeSpan(10, 0, 0, 0);
+
+        journeyTime.ShouldBe(expected);
+    }
 }
