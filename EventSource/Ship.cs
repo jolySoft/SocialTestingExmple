@@ -1,16 +1,16 @@
-namespace EventSourceTests;
+namespace EventSource;
 
 public class Ship
 {
     public string Name { get; }
     public ShipLocation Location { get; private set; }
     public Port? CurrentPort { get; private set; }
-    public List<object> ShipsLog { get; }
+    public List<ShippingEvent> ShipsLog { get; }
 
     private Ship(string name)
     {
         Name = name;
-        ShipsLog = new List<object>();
+        ShipsLog = new List<ShippingEvent>();
     }
 
     public static Ship New(string name)

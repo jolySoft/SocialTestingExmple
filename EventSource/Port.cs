@@ -1,4 +1,4 @@
-namespace EventSourceTests;
+namespace EventSource;
 
 public class Port
 {
@@ -18,7 +18,7 @@ public class Port
         ship.Berth(this);
     }
 
-    public static Port? New(string name)
+    public static Port New(string name)
     {
         return new Port(name);
     }

@@ -1,4 +1,4 @@
-namespace EventSourceTests;
+namespace EventSource;
 
 public enum ShipLocation
 {

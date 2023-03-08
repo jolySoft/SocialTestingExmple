@@ -1,14 +1,9 @@
-namespace EventSourceTests;
+namespace EventSource;
 
 public class EventProcessor
 {
-    public void Process(ArrivalEvent arrivalEvent)
+    public void Process(ShippingEvent shippingEvent)
     {
-        arrivalEvent.Process();
-    }
-
-    public void Process(DepartureEvent departureEvent)
-    {
-        departureEvent.Process();
+        shippingEvent.Process();
     }
 }

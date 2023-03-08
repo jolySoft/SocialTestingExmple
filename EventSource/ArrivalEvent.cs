@@ -1,21 +1,12 @@
-namespace EventSourceTests;
+namespace EventSource;
 
-public class ArrivalEvent
+public class ArrivalEvent : ShippingEvent
 {
-    private readonly DateTime _occurrence;
-    private readonly Port? _port;
-    private readonly Ship _ship;
+    public ArrivalEvent(DateTime occurrence, Port port, Ship ship) : base(occurrence, port, ship) { }
 
-    public ArrivalEvent(DateTime occurrence, Port? port, Ship ship)
+    public override void Process()
     {
-        _occurrence = occurrence;
-        _port = port;
-        _ship = ship;
-    }
-
-    public void Process()
-    {
-        _port.Berth(_ship);
-        _ship.Log(this);
+        Port.Berth(Ship);
+        Ship.Log(this);
     }
 }

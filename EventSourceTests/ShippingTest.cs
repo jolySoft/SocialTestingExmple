@@ -1,3 +1,4 @@
+using EventSource;
 using Shouldly;
 using Xunit;
 
@@ -6,7 +7,7 @@ namespace EventSourceTests;
 public class ShippingTest
 {
     private readonly Ship _everGiven;
-    private readonly Port? _felixstowe;
+    private readonly Port _felixstowe;
 
     public ShippingTest()
     {

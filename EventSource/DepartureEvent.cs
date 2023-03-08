@@ -1,21 +1,12 @@
-namespace EventSourceTests;
+namespace EventSource;
 
-public class DepartureEvent
+public class DepartureEvent : ShippingEvent
 {
-    private readonly DateTime _occurrence;
-    private readonly Port _port;
-    private readonly Ship _ship;
+    public DepartureEvent(DateTime occurrence, Port port, Ship ship) : base(occurrence, port, ship) { }
 
-    public DepartureEvent(DateTime occurrence, Port port, Ship ship)
+    public override void Process()
     {
-        _occurrence = occurrence;
-        _port = port;
-        _ship = ship;
-    }
-
-    public void Process()
-    {
-        _ship.SetSail(this);
-        _port.CastOff(_ship);
+        Ship.SetSail(this);
+        Port.CastOff(Ship);
     }
 }
