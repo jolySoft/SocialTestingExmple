@@ -1,12 +1,12 @@
 namespace EventSourceTests;
 
-public class ArrivalEvent
+public class DepartureEvent
 {
     private readonly DateTime _occurrence;
-    private readonly Port? _port;
+    private readonly Port _port;
     private readonly Ship _ship;
 
-    public ArrivalEvent(DateTime occurrence, Port? port, Ship ship)
+    public DepartureEvent(DateTime occurrence, Port port, Ship ship)
     {
         _occurrence = occurrence;
         _port = port;
@@ -15,7 +15,7 @@ public class ArrivalEvent
 
     public void Process()
     {
-        _port.Berth(_ship);
-        _ship.Log(this);
+        _ship.SetSail(this);
+        _port.CastOff(_ship);
     }
 }

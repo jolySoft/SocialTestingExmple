@@ -6,7 +6,7 @@ namespace EventSourceTests;
 public class ShippingTest
 {
     private readonly Ship _everGiven;
-    private readonly Port _felixstowe;
+    private readonly Port? _felixstowe;
 
     public ShippingTest()
     {
@@ -47,5 +47,20 @@ public class ShippingTest
         _everGiven.Location.ShouldBe(ShipLocation.InPort);
         _everGiven.ShipsLog.ShouldContain(berthInFelixstowe);
         _felixstowe.Berths.ShouldContain(_everGiven);
+    }
+
+    [Fact]
+    public void DepartureEventPutsShipToSea()
+    {
+        _everGiven.Berth(_felixstowe);
+        var setToSea = new DepartureEvent(new DateTime(2023, 03, 08, 07, 34, 20), _felixstowe, _everGiven);
+        var eventProcessor = new EventProcessor();
+
+        eventProcessor.Process(setToSea);
+
+        _everGiven.CurrentPort.ShouldBeNull();
+        _everGiven.Location.ShouldBe(ShipLocation.AtSea);
+        _everGiven.ShipsLog.ShouldContain(setToSea);
+        _felixstowe.Berths.ShouldNotContain(_everGiven);
     }
 }

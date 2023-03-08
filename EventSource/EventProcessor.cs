@@ -6,4 +6,9 @@ public class EventProcessor
     {
         arrivalEvent.Process();
     }
+
+    public void Process(DepartureEvent departureEvent)
+    {
+        departureEvent.Process();
+    }
 }

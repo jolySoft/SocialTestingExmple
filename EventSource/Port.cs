@@ -18,8 +18,13 @@ public class Port
         ship.Berth(this);
     }
 
-    public static Port New(string name)
+    public static Port? New(string name)
     {
         return new Port(name);
+    }
+
+    public void CastOff(Ship ship)
+    {
+        Berths.Remove(ship);
     }
 }

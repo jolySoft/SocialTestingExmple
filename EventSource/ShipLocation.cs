@@ -2,5 +2,6 @@ namespace EventSourceTests;
 
 public enum ShipLocation
 {
-    InPort
+    InPort,
+    AtSea
 }
