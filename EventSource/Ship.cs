@@ -5,12 +5,12 @@ public class Ship
     public string Name { get; }
     public ShipLocation Location { get; private set; }
     public Port? CurrentPort { get; private set; }
-    public List<ShippingEvent> ShipsLog { get; }
+    public ShipsLog ShipsLog { get; }
 
     private Ship(string name)
     {
         Name = name;
-        ShipsLog = new List<ShippingEvent>();
+        ShipsLog = new ShipsLog();
     }
 
     public static Ship New(string name)

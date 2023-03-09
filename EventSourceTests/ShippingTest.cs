@@ -69,13 +69,16 @@ public class ShippingTest
     public void JourneyTimeIsCalculatedFromDepartureEvent()
     {
         var eventProcessor = new EventProcessor();
-        var arrivesFelixstowe = new ArrivalEvent(new DateTime(01, 01, 2033, 03, 00, 00), _felixstowe, _everGiven);
+        var arrivesFelixstowe = new ArrivalEvent(new DateTime(2023, 01, 01, 03, 00, 00), _felixstowe, _everGiven);
         eventProcessor.Process(arrivesFelixstowe);
-        var departsFelixstowe = new DepartureEvent(new DateTime(03, 01, 2023, 03, 00, 00), _felixstowe, _everGiven);
+        var departsFelixstowe = new DepartureEvent(new DateTime(2023, 01, 03, 03, 00, 00), _felixstowe, _everGiven);
+        eventProcessor.Process(departsFelixstowe);
         var newark = Port.New("Newark");
-        var arrivesNewark = new ArrivalEvent(new DateTime(13, 01, 2023, 03, 00, 00), newark, _everGiven);
+        var arrivesNewark = new ArrivalEvent(new DateTime(2023, 01, 13, 03, 00, 00), newark, _everGiven);
+        eventProcessor.Process(arrivesNewark);
 
-        TimeSpan journeyTime = _everGiven.ShipsLog.GetJourneyTime(_felixstowe, newark);
+
+        var journeyTime = _everGiven.ShipsLog.GetJourneyTime(_felixstowe, newark, _everGiven);
 
         var expected = new TimeSpan(10, 0, 0, 0);
 
