@@ -10,7 +10,7 @@ public class Ship
     private Ship(string name)
     {
         Name = name;
-        ShipsLog = new ShipsLog();
+        ShipsLog = new ShipsLog(this);
     }
 
     public static Ship New(string name)
